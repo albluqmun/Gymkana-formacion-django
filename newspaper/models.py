@@ -5,20 +5,22 @@ from django.utils import timezone
 
 
 class BaseItems(models.Model):
-    title = models.CharField(max_length=80)
-    subtitle = models.CharField(max_length=80)
-    body = models.CharField(max_length=None)
+    title = models.CharField(blank=True, null=True, max_length=80)
+    subtitle = models.CharField(blank=True, null=True, max_length=80)
+    body = models.TextField(blank=True, null=True)
     
     class Meta:
         abstract = True
             
 
 
-class New(models.Model):
+class New(BaseItems):
    publish_date = models.DateTimeField('date published', auto_now='True')
    image = models.ImageField(upload_to='media/images/', default='media/images/image.jpg')
 
 
-class Event(models.Model):
+class Event(BaseItems):
     start_date = models.DateField(blank=False, null=False)
     end_date = models.DateField(blank=False, null=False)
+    list_display = ('title', 'subtitle', 'publish_date')
+
