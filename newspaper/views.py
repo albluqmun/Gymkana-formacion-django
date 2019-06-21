@@ -11,7 +11,7 @@ from .models import BaseItems, New, Event
 from django.views.generic import TemplateView
 
 class IndexView(TemplateView):
-    template_name = "index.html"
+    template_name = "newspaper.html"
 
 class NewView(TemplateView):
     model = New
