@@ -5,9 +5,9 @@ from django.utils import timezone
 
 
 class BaseItems(models.Model):
-    title = models.CharField(blank=True, null=True, max_length=80)
-    subtitle = models.CharField(blank=True, null=True, max_length=80)
-    body = models.TextField(blank=True, null=True)
+    title = models.CharField(blank=False, null=False, max_length=80)
+    subtitle = models.CharField(blank=False, null=False, max_length=80)
+    body = models.TextField(blank=False, null=False)
     
     class Meta:
         abstract = True
