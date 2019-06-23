@@ -1,22 +1,16 @@
-from django.shortcuts import get_object_or_404, render
+
+from django.shortcuts import render, loader
 
 # Create your views here.
-from django.http import HttpResponseRedirect
-from django.urls import reverse
-from django.views import generic
 from django.utils import timezone
+from .models import New, Event
 
-from .models import BaseItems, New, Event
 
-from django.views.generic import TemplateView
-
-class IndexView(TemplateView):
-    template_name = "index.html"
-
-class NewView(TemplateView):
-    model = New
-    template_name = "newspaper/new.html"
-
-class EventView(TemplateView):
-    model = Event
-    template_name = "newspaper/event.html"
+def index(request):
+    latest_news_list = New.objects.order_by('-id')[:3]
+    latest_events_list = Event.objects.order_by('-id')[:3]
+    context = {
+        'latest_news_list': latest_news_list,
+        'latest_events_list': latest_events_list,
+    }
+    return render(request, 'newspaper/index.html', context)

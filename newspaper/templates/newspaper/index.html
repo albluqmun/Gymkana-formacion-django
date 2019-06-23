@@ -1,0 +1,37 @@
+{% extends "newspaper/layout.html" %}
+{% block head %}
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'newspaper/style.css' %}">
+{% block title %}<div class="title">Lastest Events and News</div>{% endblock %}
+{% endblock %}
+
+{% block content %}
+{% if latest_news_list %}
+    <div class="news_container">
+    	<h1 id="underlined">News</h1>
+    {% for new in latest_news_list %}
+    	<div class="news_wrapper">
+        <div class = "news_title"><h1>{{ new.title }}</h1></div>
+        <div class = "news_subtitle"><h2>{{ new.subtitle }}</h2></div>
+        <div class = "news_body"><p>{{ new.body }}</p></div>
+    	</div>
+    {% endfor %}
+    </div>
+{% else %}
+    <p>No news available.</p>
+{% endif %}
+{% if latest_events_list %}
+    <div class="events_container">
+    	<h1 id="underlined">Events</h1>
+    {% for event in latest_events_list %}
+    	<div class="event_wrapper">
+        <div class = "event_title"><h1>{{ event.title }}</h1></div>
+        <div class = "event_subtitle"><h2>{{ event.subtitle }}</h2></div>
+        <div class = "event_body"><p>{{ event.body }}</p></div>
+    	</div>
+    {% endfor %}
+    </div>
+{% else %}
+    <p>No events available.</p>
+{% endif %}
+{% endblock %}
