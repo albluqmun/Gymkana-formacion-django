@@ -1,0 +1,15 @@
+{% load static %}
+<html>
+<head>
+	<link rel="stylesheet" type="text/css" href="{% static 'css/newspaper.css' %}">
+</head>
+<div class="header">
+	<a href="/"><h1>Newspaper</h1></a>
+</div>
+<div class="body">
+{% block content %}
+            {% endblock %}
+</div>
+<div class="footer">
+</div>
+</html>
