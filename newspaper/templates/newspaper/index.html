@@ -10,7 +10,7 @@
 {% block content %}
 {% if latest_news_list %}
     <div class="news_container">
-    	<h1 id="news">News</h1>
+    	<h2 id="news">News</h2>
     {% for new in latest_news_list %}
     	<div class="news_wrapper">
             <div class = "news_title"><h2>{{ new.title }}</h2></div>
@@ -24,7 +24,7 @@
 {% endif %}
 {% if latest_events_list %}
     <div class="events_container">
-    	<h1 id="events">Events</h1>
+    	<h2 id="events">Events</h2>
     {% for event in latest_events_list %}
     	<div class="event_wrapper">
             <div class = "event_title"><h2>{{ event.title }}</h2></div>
