@@ -1,0 +1,8 @@
+{% extends 'newspaper/layout.html' %}
+{% block content %}
+    <h1 class="new_create">Create News</h1>
+    <form method="POST" class="new-form" enctype="multipart/form-data" action="">{% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="save btn btn-default">Save</button>
+    </form>
+{% endblock %}
