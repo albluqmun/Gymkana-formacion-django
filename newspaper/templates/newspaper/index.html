@@ -13,8 +13,8 @@
     	<a href="/v1/news/create"><h2 id="news">News</h2></a>
     {% for new in latest_news_list %}
     	<div class="news_wrapper">
-            <div class = "news_title"><h2>{{ new.title }}</h2></div>
-            <div class = "news_subtitle"><h2>{{ new.subtitle }}</h2></div>
+            <div class = "news_title"><h3>{{ new.title }}</h3></div>
+            <div class = "news_subtitle"><h4>{{ new.subtitle }}</h4></div>
             <div class = "news_body"><p>{{ new.body }}</p></div>
     	</div>
     {% endfor %}
@@ -24,11 +24,11 @@
 {% endif %}
 {% if latest_events_list %}
     <div class="events_container">
-    	<h2 id="events">Events</h2>
+        <a href="/"><h2 id="events">Events</h2></a>
     {% for event in latest_events_list %}
     	<div class="event_wrapper">
-            <div class = "event_title"><h2>{{ event.title }}</h2></div>
-            <div class = "event_subtitle"><h2>{{ event.subtitle }}</h2></div>
+            <div class = "event_title"><h3>{{ event.title }}</h3></div>
+            <div class = "event_subtitle"><h4>{{ event.subtitle }}</h4></div>
             <div class = "event_body"><p>{{ event.body }}</p></div>
     	</div>
     {% endfor %}

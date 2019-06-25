@@ -11,19 +11,16 @@ h1 {
 	flex-wrap: wrap;
 	justify-content: space-around;
 	display: flex;
-	flex-flow: row wrap;
 }
 
 .body>* {
 	flex: 1 100%;
 }
 
-
 .header {
 	margin-right: auto;
 	text-align: center;
 }
-
 
 a {
 	color: rgb(125, 167, 163);
