@@ -15,6 +15,6 @@ class NewsForm(forms.ModelForm):
         image = self.cleaned_data.get('image')
         max_size=10*1024*1024
 
-        if image.size > max_size:
+        if image and image.size > max_size:
             raise ValidationError("The maximum file size that can be uploaded is 10MB")
 

@@ -27,4 +27,5 @@ def create_news(request):
         form = NewsForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
+            return redirect('index')
     return render(request, 'newspaper/create.html', {'form': form})
