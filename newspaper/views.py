@@ -42,3 +42,14 @@ def news_view(request):
 def news_view_detail(request, news_id):
     news = New.objects.get(pk=news_id)
     return render(request, 'newspaper/news_view_detail.html', {'news': news})
+
+
+def news_update(request, news_id):
+    news = get_object_or_404(New, pk=news_id)
+    if request.method == 'POST':
+        form = NewsForm(request.POST, files=request.FILES, instance=news)
+        if form.is_valid():
+            form.save()
+    else:
+        form = NewsForm(instance=news, initial={'news_id': news_id})
+    return render(request, 'newspaper/news_update.html', {'form': form})
