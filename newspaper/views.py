@@ -1,8 +1,13 @@
 
-from django.shortcuts import render, loader
+from django.shortcuts import render, get_object_or_404
 
 # Create your views here.
+from django.shortcuts import redirect
 from django.utils import timezone
+from django.http import Http404
+from django.views.generic.edit import CreateView
+from django.urls import reverse, reverse_lazy
+from .forms import NewsForm
 from .models import New, Event
 
 
@@ -14,3 +19,12 @@ def index(request):
         'latest_events_list': latest_events_list,
     }
     return render(request, 'newspaper/index.html', context)
+
+
+def create_news(request):
+    form = NewsForm()
+    if request.method == 'POST':
+        form = NewsForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+    return render(request, 'newspaper/create.html', {'form': form})

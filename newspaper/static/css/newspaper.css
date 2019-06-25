@@ -3,6 +3,10 @@ body{
 	background-color:  rgb(253, 241, 241);
 }
 
+h1{
+	color: rgb(125, 167, 163);
+}
+
 .body{
 	flex-wrap: wrap;
 	justify-content: space-around;
@@ -49,3 +53,4 @@ a{
 .events_container #events{
 	text-align: center;
 }
+
