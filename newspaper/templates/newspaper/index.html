@@ -10,7 +10,7 @@
 {% block content %}
 {% if latest_news_list %}
     <div class="news_container">
-    	<h2 id="news">News</h2>
+    	<a href="/v1/news/create"><h2 id="news">News</h2></a>
     {% for new in latest_news_list %}
     	<div class="news_wrapper">
             <div class = "news_title"><h2>{{ new.title }}</h2></div>

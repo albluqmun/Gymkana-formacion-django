@@ -1,56 +1,56 @@
-body{
+body {
 	font-family: Arial, Helvetica, sans-serif;
-	background-color:  rgb(253, 241, 241);
+	background-color: rgb(253, 241, 241);
 }
 
-h1{
+h1 {
 	color: rgb(125, 167, 163);
 }
 
-.body{
+.body {
 	flex-wrap: wrap;
 	justify-content: space-around;
 	display: flex;
 	flex-flow: row wrap;
 }
-.body > * {
+
+.body>* {
 	flex: 1 100%;
 }
 
 
-.header{
+.header {
 	margin-right: auto;
 	text-align: center;
 }
 
 
-a{
+a {
 	color: rgb(125, 167, 163);
 	text-decoration: none;
-} 
+}
 
 .body p {
-	color:rgb(63, 61, 61);
+	color: rgb(63, 61, 61);
 }
 
-.news_container{
+.news_container {
 	color: rgb(125, 167, 163);
 }
 
-.news_container #news{
+.news_container #news {
 	text-align: center;
 }
 
-.news_wrapper{
+.news_wrapper {
 	color: rgb(125, 167, 163);
 
 }
 
-.events_container{
+.events_container {
 	color: rgb(125, 167, 163);
 }
 
-.events_container #events{
+.events_container #events {
 	text-align: center;
 }
-
