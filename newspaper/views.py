@@ -29,3 +29,16 @@ def create_news(request):
             form.save()
             return redirect('index')
     return render(request, 'newspaper/create.html', {'form': form})
+
+
+def news_view(request):
+    news_list = New.objects.order_by("publish_date")
+    context = {
+        'news_list': news_list,
+    }
+    return render(request, 'newspaper/news_view.html', context)
+
+
+def news_view_detail(request, news_id):
+    news = New.objects.get(pk=news_id)
+    return render(request, 'newspaper/news_view_detail.html', {'news': news})

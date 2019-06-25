@@ -19,7 +19,7 @@ class New(BaseItems):
 
     def __str__(self):
         return self.title + "This New was published the day {}.".format(self.publish_date)
-
+      
 
 class Event(BaseItems):
     start_date = models.DateField(blank=False, null=False)
