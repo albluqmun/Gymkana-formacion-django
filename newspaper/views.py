@@ -66,6 +66,3 @@ class NewsCreate(CreateView):
     form_class = NewsForm
     template_name = 'newspaper/create.html'
     success_url = 'create'
-
-    def get_success_url(self):
-        return reverse('newspaper:newsCreateClass')
