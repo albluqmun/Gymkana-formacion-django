@@ -61,3 +61,11 @@ def news_delete(request, news_id):
         news.delete()
         return redirect('news_view')
     return render(request, 'newspaper/news_delete.html')
+
+class NewsCreate(CreateView):
+    form_class = NewsForm
+    template_name = 'newspaper/create.html'
+    success_url = 'create'
+
+    def get_success_url(self):
+        return reverse('newspaper:newsCreateClass')
