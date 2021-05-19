@@ -19,7 +19,7 @@ class Migration(migrations.Migration):
                 ('subtitle', models.CharField(max_length=100)),
                 ('body', models.TextField()),
                 ('publish_date', models.DateTimeField(auto_now_add=True, verbose_name='date published')),
-                ('image', models.ImageField(default='static/news/images/default-news.jpeg', upload_to='uploads/images/')),
+                ('image', models.ImageField(default='default/static/news/images/default-news.jpeg', upload_to='uploads/images/')),
             ],
             options={
                 'ordering': ['title'],

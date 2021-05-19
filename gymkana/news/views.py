@@ -1,10 +1,11 @@
 from django.http import HttpResponseRedirect
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, render, redirect
 from django.urls import reverse
 from django.utils import timezone
 from django.views import generic
 
 from .models import New
+from .forms import NewForm
 
 def index(request):
     latest_news_list = New.objects.order_by('-publish_date')[:4]
@@ -14,6 +15,35 @@ def index(request):
 def detail(request, new_id):
     new = get_object_or_404(New, pk=new_id)
     return render(request, 'news/v1/detail.html', {'new': new})
+
+def create(request):
+    context = {}
+    form = NewForm(request.POST or None)
+    if form.is_valid():
+        new = form.save()
+        return render(request, 'news/v1/detail.html', {'new': new})
+
+    context['form'] = form
+    return render(request, 'news/v1/create.html', context)
+
+def update(request, new_id):
+    new = get_object_or_404(New, pk=new_id)
+
+    form = NewForm(request.POST or None, instance=new)
+    if form.is_valid():
+        new = form.save()
+        return render(request, 'news/v1/detail.html', {'new': new})
+
+    return render(request, 'news/v1/update.html', {'form': form})
+
+def delete(request, new_id):
+    context = {}
+    new = get_object_or_404(New, pk=new_id)
+    if request.method == 'POST':
+        new.delete()
+        return redirect('index-1')
+
+    return render(request, 'news/v1/confirm_delete.html', context)
 
 class IndexView(generic.ListView):
     template_name = 'news/v2/index.html'
@@ -39,24 +69,16 @@ class DetailView(generic.DetailView):
         return New.objects.filter(publish_date__lte=timezone.now())
 
 class CreateView(generic.edit.CreateView):
-    model = New
+    form_class = NewForm
     template_name = 'news/v2/create.html'
-    fields = ['title', 'subtitle', 'body', 'image']
-
-    def form_valid(self, form):
-        if form.instance.image.format in ['JPG', 'PNG']:
-            #somestuff
-            return super().form_valid(form)
-        else:
-            raise TypeError()
 
     def get_success_url(self):
         return reverse('news:detail', kwargs={'pk': self.object.id})
 
 class UpdateView(generic.edit.UpdateView):
     model = New
+    form_class = NewForm
     template_name = 'news/v2/update.html'
-    fields = ['title', 'subtitle', 'body', 'image']
 
     def get_success_url(self):
         return reverse('news:detail', kwargs={'pk': self.object.id})

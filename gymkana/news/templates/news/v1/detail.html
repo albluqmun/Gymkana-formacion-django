@@ -35,6 +35,15 @@
         <div class="container">
             <p>{{ new.body }}</p>
             <p>{{ new.publish_date }}</p>
+            <div class="row">
+                <div class="col-lg-6">
+                    <button type="button" onclick="window.location.href='{% url 'news:update-1' new.id %}'" class="btn btn-primary">Update New</button>
+                    <button type="button" onclick="window.history.back();" class="btn btn-default">Back</button>
+                </div>
+                <div class="col-lg-6">
+                    <button type="button" onclick="window.location.href='{% url 'news:delete-1' new.id %}'" class="btn btn-danger">Delete</button>
+                </div>
+            </div>
             <figure class="new_photo">
                 <img class="img-responsive" src="{{ new.image.url }}" alt="{{ new.subtitle }}">
             </figure>

@@ -17,7 +17,7 @@
         {% for new in latest_news_list %}
             <article class="new col-xs-12 col-md-4">
                 <div class="thumbnail">
-                    <a href="{% url 'news:detail' new.id %}">
+                    <a href="{% url 'news:detail-1' new.id %}">
                         <figure class="new_photo">
                             <img class="img-responsive" src="{{ new.image.url }}" alt="{{ new.subtitle }}">
                         </figure>
@@ -32,6 +32,9 @@
     {% else %}
         <p>No news are available.</p>
     {% endif %}
+            <div class="row">
+                <button type="button" onclick="window.location.href='{% url 'news:create-1' %}'" class="btn btn-primary">Write a New</button>
+            </div>
         </div>
     </div>
 </body>

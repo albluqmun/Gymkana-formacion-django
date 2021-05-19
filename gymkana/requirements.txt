@@ -5,7 +5,6 @@ chardet==4.0.0
 decorator==5.0.6
 Django==2.2.22
 django-bootstrap3==15.0.0
-django-environ==0.4.5
 djangorestframework==3.12.4
 httpie==2.4.0
 idna==2.10
@@ -21,6 +20,7 @@ prompt-toolkit==3.0.18
 ptyprocess==0.7.0
 Pygments==2.8.1
 PySocks==1.7.1
+python-dotenv==0.17.1
 pytz==2021.1
 requests==2.25.1
 requests-toolbelt==0.9.1
