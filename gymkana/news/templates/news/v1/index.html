@@ -1,14 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>News index</title>
-    {% load static %}
-    {% load bootstrap3 %}
-    {% bootstrap_css %}
-    {% bootstrap_javascript %}
-</head>
-<body>
+{% extends "combi/base.html" %}
+{% block title %}News index{% endblock %}
+{% block body %}
     <div class="panel panel-primary">
         <div class="panel-heading">Latest news</div>
         <div class="panel-body">
@@ -37,5 +29,4 @@
             </div>
         </div>
     </div>
-</body>
-</html>
+{% endblock %}

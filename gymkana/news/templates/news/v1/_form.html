@@ -1,17 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>{% block title %}New Form{% endblock %}</title>
-    {% load static %}
-    {% load bootstrap3 %}
-    {% bootstrap_css %}
-    {% bootstrap_javascript %}
-</head>
-<body>
-    <form enctype="multipart/form-data" method="post">{% csrf_token %}
-        {{ form.as_p }}
-        <input type="submit" value="Save">
-    </form>
-</body>
-</html>
+{% extends "combi/base.html" %}
+{% block title %}New Form{% endblock %}
+{% block body %}
+    <div class="panel panel-primary">
+        <div class="panel-heading">{% block heading %}Form{% endblock %}</div>
+        <div class="panel-body">
+            <form enctype="multipart/form-data" method="post">{% csrf_token %}
+                {{ form.as_p }}
+                <input type="submit" value="Save">
+            </form>
+        </div>
+    </div>
+{% endblock %}

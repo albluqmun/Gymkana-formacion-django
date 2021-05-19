@@ -1,13 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Confirmar borrado noticia</title>
-</head>
-<body>
-    <form method="post">{% csrf_token %}
-  Are you sure you want to delete this item?
-  <input type="submit" value="Yes" />
-</form>
-</body>
-</html>
+{% extends "combi/base.html" %}
+{% block title %}Confirm New deletion{% endblock %}
+{% block body %}
+    <div class="panel panel-danger">
+        <div class="panel-heading">{% block heading %}Confirm New deletion{% endblock %}</div>
+        <div class="panel-body">
+            <form method="post">{% csrf_token %}
+              Are you sure you want to delete this item?
+              <input type="submit" value="Yes" />
+            </form>
+        </div>
+    </div>
+{% endblock %}

@@ -1,12 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>{{ new.title }}</title>
-    {% load static %}
-    {% load bootstrap3 %}
-    {% bootstrap_css %}
-    {% bootstrap_javascript %}
+{% extends "combi/base.html" %}
+{% block title %}{{ new.title }}{% endblock %}
+{% block head %}
     <style>
         #heading {
             background-image: url({{ new.image.url }});
@@ -25,8 +19,8 @@
             color: lightgoldenrodyellow;
         }
     </style>
-</head>
-<body>
+{% endblock %}
+{% block body %}
     <div id="article" class="jumbotron">
         <div id="heading" class="container">
             <h1>{{ new.title }}</h1>
@@ -49,5 +43,4 @@
             </figure>
         </div>
     </div>
-</body>
-</html>
+{% endblock %}
