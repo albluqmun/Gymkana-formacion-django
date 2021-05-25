@@ -1,0 +1,29 @@
+{% extends "generic.html" %}
+{% block content %}
+
+<h1>Index</h1>
+
+<section class="events">
+<h2>Events</h2>
+{% for event in context.events %}
+<article class="event">
+<h3>{{ event.title }}</h3>
+<h4>{{event.subtitle }}</h4>
+<h5>{{event.start_date}} - {{event.end_date}}</h5>
+</article>
+{% endfor %}
+</section>
+
+<section class="news">
+<h2>News</h2>
+{% for new in context.news %}
+<article class="new">
+<h3>{{ new.title }}</h3>
+<h4>{{new.subtitle }}</h4>
+<h5>{{new.publish_date}}</h5>
+</article>
+{% endfor %}
+</section>
+
+
+{% endblock %}
