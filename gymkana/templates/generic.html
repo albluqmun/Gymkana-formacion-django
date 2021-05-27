@@ -4,14 +4,16 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 {% load static %}
-<link type="text/css" href="{% static 'css/style.css' %}" rel="stylesheet">
+<link type="text/css" href="{% static 'news/style.css' %}" rel="stylesheet">
 </head>
 <body>
-<header>
-</header>
-{% block content %}
-{% endblock %}
-<footer>
-</footer>
+<div class="wrapper">
+    <header class="main__header"></header>
+    <div class="main__content">
+    {% block content %}
+    {% endblock %}
+    </div>
+    <footer class="main__footer"></footer>
+</div>
 </body>
 </html>

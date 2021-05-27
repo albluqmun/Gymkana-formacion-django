@@ -1,0 +1,16 @@
+{% extends "generic.html" %}
+{% block content %}
+
+<section class="news">
+<h1 class="news__title">News</h1>
+{% for new in news %}
+<a href="{% url 'news:detail' new.id %}">
+    <article class="news__articles">
+        <h2 class="news__articles-title">{{ new.title }}</h2>
+        <h3 class="news__articles-subtitle">{{new.subtitle }}</h3>
+    </article>
+</a>
+{% endfor %}
+</section>
+
+{% endblock %}

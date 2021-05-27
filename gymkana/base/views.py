@@ -1,5 +1,6 @@
 from django.views import generic
-from .models import Event, New
+from events.models import Event
+from news.models import  New
 
 # Create your views here.
 class IndexView(generic.ListView):
@@ -8,7 +9,7 @@ class IndexView(generic.ListView):
 
     def get_queryset(self):
         context = {
-            'events':Event.objects.all(),
-            'news':New.objects.all()
+            'events':Event.objects.all()[:3],
+            'news':New.objects.all()[:3]
             }
         return context
