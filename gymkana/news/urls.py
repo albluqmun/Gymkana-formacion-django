@@ -8,5 +8,7 @@ urlpatterns = [
     path('v1/news/create', views.create, name='create'),
     path('v1/news/detail/<int:id>', views.detail, name='detail'),
     path('v1/news/update/<int:id>', views.update, name="update"),
+    path('v2/news/', views.IndexView.as_view(), name='index_view'),
+#   path('v2/news/detail/<int:id>', views.DetailView.as_view(), name='detail_view'),
 
 ]

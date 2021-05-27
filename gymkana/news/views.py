@@ -1,5 +1,6 @@
 from typing import NewType
 from django.shortcuts import get_list_or_404, render
+from django.views import generic
 from .models import New
 
 
@@ -17,3 +18,18 @@ def detail(request, id):
 
 def update(request, new_id):
     return render(request, 'update.html')
+
+class IndexView(generic.ListView):
+    template_name="list.html"
+    context = 'news'
+    def get_queryset(self):
+        return New.objects.all()
+
+"""
+class DetailView(generic.DetailView, id):
+    template_name="detail.html"
+    context = "new"
+    def get_queryset(self):
+        return New.objects.get(id = id)
+""" 
+    

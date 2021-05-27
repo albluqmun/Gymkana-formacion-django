@@ -2,14 +2,15 @@
 {% block content %}
 
 <section class="news">
-<h1 class="news__title">News</h1>
+<div class="news__title">News</div>
 {% for new in news %}
-<a href="{% url 'news:detail' new.id %}">
-    <article class="news__articles">
-        <h2 class="news__articles-title">{{ new.title }}</h2>
-        <h3 class="news__articles-subtitle">{{new.subtitle }}</h3>
-    </article>
-</a>
+    <a class="article" href="{% url 'news:detail' new.id %}">
+        <div class="article__info">
+            <div class="article__info-title">{{ new.title }}</div>
+            <div class="article__info-subtitle">{{new.subtitle }}</div>
+        </div>
+        <div></div>
+    </a>
 {% endfor %}
 </section>
 
