@@ -18,11 +18,12 @@ def create(request):
     if new_form.is_valid():
         instance_new = new_form.save(commit=False)
         instance_new.save()
+        return HttpResponseRedirect(reverse('news:detail', args=[instance_new.id]))
     return render(request, 'create.html', {'new_form':new_form})
 
 
 def detail(request, id):
-    new = New.objects.get(id = id)
+    new = get_object_or_404(New, id = id)
     return render(request, 'detail.html', {'new': new})
 
 
@@ -31,23 +32,21 @@ def update(request, id):
     updated_form = NewForm(request.POST or None, request.FILES or None, instance = new)
     if updated_form.is_valid():
         updated_form.save()
-        return HttpResponseRedirect(reverse('news:index'))
+        return HttpResponseRedirect(reverse('news:detail',  args=[id]))
     return render(request, 'update.html', {'new_update_form':updated_form})
+
+def delete(request, id):
+    new = get_object_or_404(New, id = id).delete()
+    return HttpResponseRedirect(reverse('news:index'))
 
 
 class IndexView(generic.ListView):
     template_name="list.html"
-    context = 'news'
+    context_object_name = 'news'
     def get_queryset(self):
         return New.objects.all()
 
 
-
-"""
-class DetailView(generic.DetailView, id):
+class DetailView(generic.DetailView):
     template_name="detail.html"
-    context = "new"
-    def get_queryset(self):
-        return New.objects.get(id = id)
-""" 
-    
+    model = New

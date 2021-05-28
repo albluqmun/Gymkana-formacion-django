@@ -6,8 +6,5 @@ class Event(BaseItems):
     start_date = models.DateTimeField(blank=False)
     end_date = models.DateTimeField(blank=False)
 
-    class Meta(BaseItems.Meta):
-        pass
-
     def __str__(self):
         return self.title

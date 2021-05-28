@@ -6,6 +6,9 @@ def image_size(image):
         raise ValidationError('The image should not exceed 10MB.')
 
 def image_extension(image):
+    # meter ipdb
     valid_extensions = ["jpg","png"]
     if not any([image.url.endswith(e) for e in valid_extensions]):
         raise ValidationError('The image must have a jpg or a png extension.')
+
+#  Mimetype

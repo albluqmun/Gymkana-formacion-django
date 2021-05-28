@@ -16,6 +16,8 @@ class NewMethodTest(TestCase):
 
     """
     If there are no news, shows an message.
+
+    #Preguntar a Ale o a Javi
     """
     def test_list_with_no_news(self):
         response = self.client.get(reverse('news:list'))

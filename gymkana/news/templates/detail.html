@@ -6,6 +6,8 @@
 <img src="/media/{{ new.image }}" alt="{{ new.title }} header image">
     <h1>{{ new.title }}</h1>
     <h3>{{ new.subtitle }} - {{ new.publish_date }}</h3>
+             <a href="{% url 'news:update' new.id %}">Edit</a>
+            <a href="{% url 'news:delete' new.id %}">Remove</a>
 </div>
 <div class="new__detail-content">
     {{ new.body }}
