@@ -2,9 +2,9 @@
 {% block content %}
 
 <section class="events">
-<a class="events__title">Events</a>
+<a class="events__title" >Events</a>
 {% for event in context.events %}
-<a class="article" href="">
+<a class="article">
         <div class="article__info">
             <div class="article__info-title">{{ event.title }}</div>
             <div class="article__info-subtitle">{{event.subtitle }}</div>
@@ -14,7 +14,7 @@
 </section>
 
 <section class="news">
-<a class="news__title" href={% url 'news:index' %}>News</a>
+<a class="news__title" href="{% url 'news:index' %}">News</a>
 {% for new in context.news %}
 <a class="article" href="{% url 'news:detail' new.id %}">
         <div class="article__info">

@@ -38,7 +38,7 @@ a:hover{
     padding: 2rem 1rem;
 }
 
-.news{
+.news, .events{
     display: flex;
     flex-direction: column;
 }
