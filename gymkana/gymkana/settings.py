@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'base.apps.BaseConfig',
     'events.apps.EventsConfig',
     'news.apps.NewsConfig',
+    'rest_framework'
 ]
 
 MIDDLEWARE = [

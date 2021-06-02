@@ -1,9 +1,9 @@
 {% extends "generic.html" %}
 {% block content %}
 
-<form class="new__create" method="POST" enctype="multipart/form-data">
+<form class="event__create" method="POST" enctype="multipart/form-data">
 {% csrf_token %}
-{{ new_form.as_p }}
+{{ form.as_p }}
 <input type="submit">
 </form>
 

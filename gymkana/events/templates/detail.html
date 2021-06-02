@@ -1,0 +1,17 @@
+{% extends "generic.html" %}
+{% block content %}
+
+<article class="event__detail">
+<div class="event__detail-header">
+    <h1>{{ event.title }}</h1>
+    <h3>{{ event.subtitle }} - {{ event.start_date }} - {{ event.end_date }}</h3>
+             <a href="{% url 'events:update_view' event.id %}">Edit</a>
+            <a href="{% url 'events:delete_view' event.id %}">Remove</a>
+</div>
+<div class="event__detail-content">
+    {{ event.body }}
+</div>
+</article>
+
+
+{% endblock %}
