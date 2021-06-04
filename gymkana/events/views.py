@@ -43,7 +43,20 @@ class EventList(generics.ListAPIView):
     queryset = Event.objects.all()
     serializer_class = EventSerializer
 
+class EventCreate(generics.CreateAPIView):
+    serializer_class = EventSerializer
 
-class EventDetail(generics.RetrieveUpdateDestroyAPIView):
+
+class EventDestroy(generics.DestroyAPIView):
     queryset = Event.objects.all()
-    serializer_class = serializer_class = EventSerializer
+    serializer_class = EventSerializer
+
+
+class EventDetail(generics.RetrieveAPIView):
+    queryset = Event.objects.all()
+    serializer_class = EventSerializer
+
+class EventUpdate(generics.UpdateAPIView):
+    queryset = Event.objects.all()
+    lookup_field = 'pk'
+    serializer_class = EventSerializer

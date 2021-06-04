@@ -7,41 +7,104 @@ from django.test import TestCase
 # Create your tests here.
 from .models import New
 
-class NewMethodTest(TestCase):
-
-    def create_new(title, subtitle, body, days, image):
+def create_new(title, subtitle, body, days, image):
         publish_date = timezone.now() + datetime.timedelta(days = days)
         return New.objects.create(title=title, subtitle=subtitle,
         body=body,publish_date=publish_date,image=image)
 
-    def setUp(self):                                                                                                                                                                                                                                                                                                                                            j                                                          )
+class NewMethodTest(TestCase):
 
     """
-    If there are no news, shows an message.
-
+    Index view tests
     """
-    def test_list_with_no_news(self):
+
+    def test_no_news_function_view(self):
         response = self.client.get(reverse('news:index'))
         self.assertEqual(response.status_code, 200)
-        self.assertContains(response, "No news are avaiable.")
         self.assertQuerysetEqual(response.context['news'],[])
 
+    def test_no_news_class_view(self):
+        response = self.client.get(reverse('news:index_view'))
+        self.assertEqual(response.status_code, 200)
+        self.assertQuerysetEqual(response.context['news'],[])
+
+    def test_one_new(self):
+        create_new(title='Good new', subtitle='Subtitle', body='Body', 
+        days=2, image='Gymkana-formacion-django/gymkana/media/default.jpg')
+        response = self.client.get(reverse('news:index'))
+        self.assertEqual(response.status_code, 200)
+        self.assertQuerysetEqual(response.context['news'],['<New: Good new>'])
+
+    def test_one_bad_new(self):
+        create_new(title='Bad new', subtitle='Subtitle', body='Body', 
+        days=2, image='Gymkana-formacion-django/gymkana/media/yuhugasolina.gif')
+        response = self.client.get(reverse('news:index'))
+        self.assertQuerysetEqual(response.context['news'],[])
+
+    def test_one_good_and_one_bad_new(self):
+        create_new(title='Good new', subtitle='Subtitle', body='Body', 
+        days=2, image='default.jpg')
+        create_new(title='Bad new', subtitle='Subtitle', body='Body', 
+        days=2, image='Gymkana-formacion-django/gymkana/media/yuhugasolina.gif')
+        response = self.client.get(reverse('news:index'))
+        self.assertQuerysetEqual(response.context['news'],['<New: Good new>'])
+
+    def two_news(self):
+        create_new(title='Good new 1', subtitle='Subtitle', body='Body', 
+        days=2, image='default.jpg')
+        create_new(title='Good new 2', subtitle='Subtitle', body='Body', 
+        days=2, image='Gymkana-formacion-django/gymkana/media/default.jpg')
+        response = self.client.get(reverse('news:index'))
+        self.assertQuerysetEqual(response.context['news'],['<New: Good new 1>, <New: Good new 2>'])
+
+
     """
-    News published in the future should not be displayed
+    Detail view tests
     """
+
+    def test_good_new_displayed(self):
+        good_new = create_new(title='Good new', subtitle='Subtitle', body='Body', 
+        days=2, image='default.jpg')
+        url = reverse('news:detail', args={'id': good_new.id})
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
     
-    """
-    TODO News published in the past should be displayed
-    """
+    def test_image_bad_mimetype(self):
+        bad_new = create_new(title='Bad new', subtitle='Subtitle', body='Body', 
+        days=2, image='yuhugasolina.gif')
+        url = reverse('news:detail', args={'id': bad_new.id})
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 404)
+
+    def test_image_bad_size(self):
+        bad_new = create_new(title='Bad new', subtitle='Subtitle', body='Body', 
+        days=2, image='Pano-bayer-leverkusen.jpg')
+        url = reverse('news:detail', args={'id': bad_new.id})
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 404)
+
+    def test_new_no_title(self):
+        bad_new = create_new(title='', subtitle='Subtitle', body='Body', 
+        days=2, image='default.jpg')
+        url = reverse('news:detail', args={'id': bad_new.id})
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 404)
 
     """
-    TODO News with no title, subtitle or body should not be displayed
+    Update view tests
     """
 
-    """
-    TODO News with an image that is not a jpg or png shoud not be displayed
-    """
-
+    def test_new_updated(self):
+        good_new = create_new(title='Good new', subtitle='Subtitle', body='Body', 
+        days=2, image='default.jpg')
+        url = reverse('news:update', args={'id': good_new.id})
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        client_response = self.client.post(reverse('news:update', kwargs={'id':good_new.id}), 
+        {'title':'Good new updated', 'subtitle':'Subtitle', 'body':'Body', 'days':'2021-10-12 21:20', 'image':'default.jpg'})
+        self.assertEqual(client_response.status_code, 302)
+        good_new.refresh_from_db()
+        self.assertEqual(good_new.title, 'Good new udpdated')
 
 
 
