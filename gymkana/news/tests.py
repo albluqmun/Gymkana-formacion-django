@@ -9,8 +9,10 @@ from .models import New
 
 def create_new(title, subtitle, body, days, image):
         publish_date = timezone.now() + datetime.timedelta(days = days)
-        return New.objects.create(title=title, subtitle=subtitle,
+        new = New(title=title, subtitle=subtitle,
         body=body,publish_date=publish_date,image=image)
+        new.save()
+        return new
 
 class NewMethodTest(TestCase):
 
@@ -65,28 +67,28 @@ class NewMethodTest(TestCase):
     def test_good_new_displayed(self):
         good_new = create_new(title='Good new', subtitle='Subtitle', body='Body', 
         days=2, image='default.jpg')
-        url = reverse('news:detail', args={'id': good_new.id})
+        url = reverse('news:detail_view', kwargs={'pk': good_new.id})
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
     
     def test_image_bad_mimetype(self):
         bad_new = create_new(title='Bad new', subtitle='Subtitle', body='Body', 
         days=2, image='yuhugasolina.gif')
-        url = reverse('news:detail', args={'id': bad_new.id})
+        url = reverse('news:detail_view', kwargs={'pk': bad_new.id})
         response = self.client.get(url)
         self.assertEqual(response.status_code, 404)
 
     def test_image_bad_size(self):
         bad_new = create_new(title='Bad new', subtitle='Subtitle', body='Body', 
         days=2, image='Pano-bayer-leverkusen.jpg')
-        url = reverse('news:detail', args={'id': bad_new.id})
+        url = reverse('news:detail_view', kwargs={'pk':bad_new.id,})
         response = self.client.get(url)
         self.assertEqual(response.status_code, 404)
 
     def test_new_no_title(self):
         bad_new = create_new(title='', subtitle='Subtitle', body='Body', 
         days=2, image='default.jpg')
-        url = reverse('news:detail', args={'id': bad_new.id})
+        url = reverse('news:detail_view', kwargs={'pk': bad_new.id})
         response = self.client.get(url)
         self.assertEqual(response.status_code, 404)
 
@@ -97,14 +99,10 @@ class NewMethodTest(TestCase):
     def test_new_updated(self):
         good_new = create_new(title='Good new', subtitle='Subtitle', body='Body', 
         days=2, image='default.jpg')
-        url = reverse('news:update', args={'id': good_new.id})
-        response = self.client.get(url)
-        self.assertEqual(response.status_code, 200)
-        client_response = self.client.post(reverse('news:update', kwargs={'id':good_new.id}), 
+        client_response = self.client.post(reverse('news:update_view', kwargs={'pk':good_new.id}), 
         {'title':'Good new updated', 'subtitle':'Subtitle', 'body':'Body', 'days':'2021-10-12 21:20', 'image':'default.jpg'})
-        self.assertEqual(client_response.status_code, 302)
         good_new.refresh_from_db()
-        self.assertEqual(good_new.title, 'Good new udpdated')
+        self.assertRedirects(client_response, 'news:detail_view', kwargs={'pk': good_new.id})
 
 
 

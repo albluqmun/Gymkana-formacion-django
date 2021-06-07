@@ -10,7 +10,7 @@ from .forms import NewForm
 
 def index(request):
     news = New.objects.all()
-    return render(request, 'list.html', {'news':news})
+    return render(request, 'news_list.html', {'news':news})
 
 
 def create(request):
@@ -19,12 +19,12 @@ def create(request):
         instance_new = new_form.save(commit=False)
         instance_new.save()
         return HttpResponseRedirect(reverse('news:detail', args=[instance_new.id]))
-    return render(request, 'create.html', {'form':new_form})
+    return render(request, 'news_create.html', {'form':new_form})
 
 
 def detail(request, id):
     new = get_object_or_404(New, id = id)
-    return render(request, 'detail.html', {'new': new})
+    return render(request, 'news_detail.html', {'new': new})
 
 
 def update(request, id):
@@ -33,7 +33,7 @@ def update(request, id):
     if updated_form.is_valid():
         updated_form.save()
         return HttpResponseRedirect(reverse('news:detail',  args=[id]))
-    return render(request, 'new_update.html', {'form':updated_form})
+    return render(request, 'news_update.html', {'form':updated_form})
 
 def delete(request, id):
     new = get_object_or_404(New, id = id).delete()
@@ -41,7 +41,7 @@ def delete(request, id):
 
 
 class IndexView(generic.ListView):
-    template_name="list.html"
+    template_name="news_list.html"
     context_object_name = 'news'
     def get_queryset(self):
         return New.objects.all()
@@ -49,19 +49,19 @@ class IndexView(generic.ListView):
 
 class DetailView(generic.DetailView):
     model = New
-    template_name="detail.html"
+    template_name="news_detail.html"
 
 class CreateView(generic.CreateView):
     model = New
     fields = '__all__'
-    template_name = "create.html"
+    template_name = "news_create.html"
 
 class UpdateView(generic.UpdateView):
     model = New
     fields = '__all__'
-    template_name = "update.html"
+    template_name = "news_update.html"
 
 class DeleteView(generic.DeleteView):
     model = New
-    template_name = "delete.html"
+    template_name = "news_delete.html"
     success_url = reverse_lazy('create_view')

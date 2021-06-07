@@ -9,7 +9,7 @@ from .serializers import EventSerializer
 # Create your views here.
 
 class IndexView(generic.ListView):
-    template_name="list.html"
+    template_name="events_list.html"
     context_object_name = 'events'
     def get_queryset(self):
         return Event.objects.all()
@@ -17,25 +17,25 @@ class IndexView(generic.ListView):
 
 class DetailView(generic.DetailView):
     model = Event
-    template_name="detail.html"
+    template_name="events_detail.html"
 
 
 class CreateView(generic.CreateView):
     form_class = EventForm
     model = Event
-    template_name = "create.html"
+    template_name = "events_create.html"
 
 
 class UpdateView(generic.UpdateView):
     form_class = EventForm
     model = Event
-    template_name = "update.html"
+    template_name = "events_update.html"
 
 
 
 class DeleteView(generic.DeleteView):
     model = Event
-    template_name = "delete.html"
+    template_name = "events_delete.html"
     success_url = reverse_lazy('create_view')
 
 
