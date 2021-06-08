@@ -17,7 +17,6 @@ class New(BaseItems):
     """
     image = ImageField(default='default.jpg', validators=[image_size, image_extension])
 
-    """
     def clean(self):
         limit = 10 * 1024 * 1024
         if self.image.size > limit:
@@ -26,8 +25,6 @@ class New(BaseItems):
         valid_extensions = ["jpg","png"]
         if not any([self.image.url.endswith(e) for e in valid_extensions]):
             raise ValidationError('The image must have a jpg or a png extension.')
-
-    """
 
     def __str__(self):
         return self.title
