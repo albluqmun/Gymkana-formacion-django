@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.views import generic
 from .models import Event
 from .forms import EventForm
-from django.urls.base import reverse_lazy
+from django.urls.base import reverse, reverse_lazy
 from rest_framework import viewsets, generics
 from .serializers import EventSerializer
 
@@ -17,7 +17,7 @@ class IndexView(generic.ListView):
 
 class DetailView(generic.DetailView):
     model = Event
-    template_name="events_detail.html"
+    template_name="events:detail.html"
 
 
 class CreateView(generic.CreateView):
