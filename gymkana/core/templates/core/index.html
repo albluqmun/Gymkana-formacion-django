@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h2>Ultimos noticias:</h2>
+
+<div>
+    <ol>
+    {% for new in news%}
+            <li>{{ new.title }}</li>
+
+    {% endfor %}
+    </ol>
+</div>
+<hr>
+<h2>Ultimos eventos:&nbsp;</h2>
+<div>
+    <ol>
+    {% for event in events|slice:":3" %}
+            <li>{{ event.title }}</li>
+
+    {% endfor %}
+    </ol>
+</div>
+{% endblock%}
