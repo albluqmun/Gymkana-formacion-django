@@ -17,7 +17,13 @@ class New(BaseItems):
     publish_date = models.DateField(auto_now_add=True)
     image = models.ImageField(upload_to='', default='default.jpg', blank=True)
 
+    class Meta:
+        ordering = ('-publish_date',)
+
 
 class Event(BaseItems):
     start_date = models.DateField()
     end_date = models.DateField()
+
+    class Meta:
+        ordering = ('-start_date',)
