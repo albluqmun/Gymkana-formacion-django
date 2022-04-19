@@ -1,5 +1,6 @@
 from django.shortcuts import get_list_or_404, get_object_or_404, render
 from .models import New, Event
+from .forms import NewsForm
 # Create your views here.
 
 def index(request):
@@ -28,4 +29,16 @@ def detail_news(request, pk):
     # add news to context
     context = {'news': news}
     return render(request, 'core/detail_news.html', context=context)
+
+# create new news
+def create_news(request):
+    context ={}
+
+    form = NewsForm(request.POST or None)
+    if form.is_valid():
+        form.save()
+
+    context['form']= form
+    return render(request, "core/create_news.html", context)
+
 
