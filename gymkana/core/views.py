@@ -14,6 +14,13 @@ def index(request):
 
     return render(request, 'core/index.html', context=context)
 
+def list_news(request):
+    # get news
+    news = get_list_or_404(New)
+    # add news to context
+    context = {'news': news}
+    return render(request, 'core/list_news.html', context=context)
+
 # lectura de una noticia
 def detail_news(request, pk):
     # get news by id
