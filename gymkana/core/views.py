@@ -1,6 +1,9 @@
+from multiprocessing import context
 from django.shortcuts import get_list_or_404, get_object_or_404, render, redirect
 from .models import New, Event
 from .forms import NewsForm
+from django.views import generic
+from django.urls import reverse_lazy
 # Create your views here.
 
 def index(request):
@@ -56,9 +59,38 @@ def update_news(request, pk):
 def delete_news(request, pk):
     news = get_object_or_404(New, pk=pk)
     if request.method == 'POST':
-        print("llega aqui")
         news.delete()
         return redirect('list_news')
     return render(request, 'core/delete_news.html', context={'news': news})
 
+### class views
+class ListNews(generic.ListView):
+    model = New
+    template_name = 'core/list_news.html'
+    context_object_name = 'news'
 
+class DetailNews(generic.DetailView):
+    model = New
+    context_object_name = 'news'
+    template_name = 'core/detail_news.html'
+
+class CreateNews(generic.CreateView):
+    model = New
+    fields = ['title', 'subtitle', 'body', 'image']
+    template_name = 'core/create_news.html'
+
+class UpdateNews(generic.UpdateView):
+    model = New
+    fields = ['title', 'subtitle', 'body', 'image']
+    template_name = 'core/update_news.html'
+
+    def get_success_url(self):
+        return reverse_lazy('detail_news', kwargs={'pk': self.object.id})
+
+class DeleteNews(generic.DeleteView):
+    model = New
+    template_name = 'core/delete_news.html'
+    context_object_name = 'form'
+
+    def get_success_url(self):
+        return reverse_lazy('list_news')
