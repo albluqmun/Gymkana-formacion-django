@@ -122,3 +122,12 @@ STATIC_URL = '/static/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
+
+# Indicamos donde debe buscar los archivos staticos cuando no esten vinculados a ningun aplicación.
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'),
+)
+
+# Lugar donde se guardarán los archivos estaticos al usar collectstatic
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
