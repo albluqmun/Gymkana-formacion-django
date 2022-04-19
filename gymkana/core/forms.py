@@ -10,7 +10,7 @@ class NewsForm(forms.ModelForm):
         fields = ['title', 'subtitle', 'body', 'image']
 
      # validacion de extensiones de archivos
-    
+        # FIXME: no se puede validar los archivos
 
 
 

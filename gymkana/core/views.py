@@ -4,6 +4,7 @@ from .models import New, Event
 from .forms import NewsForm
 from django.views import generic
 from django.urls import reverse_lazy
+
 # Create your views here.
 
 def index(request):
@@ -37,7 +38,7 @@ def detail_news(request, pk):
 def create_news(request):
     context ={}
 
-    form = NewsForm(request.POST or None)
+    form = NewsForm(request.POST or None, request.FILES)
     if form.is_valid():
         form.save()
         return redirect('list_news')
@@ -47,12 +48,13 @@ def create_news(request):
 
 # update news
 def update_news(request, pk):
-    news = get_object_or_404(New, pk=pk)
-    form = NewsForm(request.POST or None, instance=news)
+    old_news = get_object_or_404(New, pk=pk)
+    form = NewsForm(request.POST or None, instance=old_news)
+    # FIXME: no se puede actualizar la imagen
     if form.is_valid():
         form.save()
         return redirect('/v1/news/' + str(pk))
-    return render(request, 'core/update_news.html', context={'news': news, 'form': form})
+    return render(request, 'core/update_news.html', context={'news': old_news, 'form': form})
 
 
 # delete news
@@ -78,8 +80,17 @@ class CreateNews(generic.CreateView):
     model = New
     fields = ['title', 'subtitle', 'body', 'image']
     template_name = 'core/create_news.html'
-    
+
     success_url = reverse_lazy('list_news')
+
+    # save image uploaded
+    def post(self, request):
+        form = NewsForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('list_news')
+        return render(request, 'core/create_news.html', context={'form': form})
+
 
 
 class UpdateNews(generic.UpdateView):
