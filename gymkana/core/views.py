@@ -37,9 +37,20 @@ def create_news(request):
     form = NewsForm(request.POST or None)
     if form.is_valid():
         form.save()
+        return redirect('list_news')
 
     context['form']= form
     return render(request, "core/create_news.html", context)
+
+# update news
+def update_news(request, pk):
+    news = get_object_or_404(New, pk=pk)
+    form = NewsForm(request.POST or None, instance=news)
+    if form.is_valid():
+        form.save()
+        return redirect('/v1/news/' + str(pk))
+    return render(request, 'core/update_news.html', context={'news': news, 'form': form})
+
 
 # delete news
 def delete_news(request, pk):

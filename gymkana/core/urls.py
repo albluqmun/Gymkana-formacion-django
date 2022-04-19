@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.urls import path
-from .views import index, detail_news, list_news, create_news, delete_news
+from .views import index, detail_news, list_news, create_news, delete_news, update_news
 
 urlpatterns = [
     path('', index, name='index'),
@@ -8,4 +8,5 @@ urlpatterns = [
     path('v1/news/<int:pk>/', detail_news, name='detail_news'),
     path('v1/news/create', create_news, name='create_news'),
     path('v1/news/<int:pk>/delete', delete_news, name='delete_news'),
+    path('v1/news/<int:pk>/update', update_news, name='update_news'),
 ]
