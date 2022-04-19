@@ -78,6 +78,9 @@ class CreateNews(generic.CreateView):
     model = New
     fields = ['title', 'subtitle', 'body', 'image']
     template_name = 'core/create_news.html'
+    
+    success_url = reverse_lazy('list_news')
+
 
 class UpdateNews(generic.UpdateView):
     model = New
