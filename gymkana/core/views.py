@@ -1,4 +1,4 @@
-from django.shortcuts import get_list_or_404, get_object_or_404, render
+from django.shortcuts import get_list_or_404, get_object_or_404, render, redirect
 from .models import New, Event
 from .forms import NewsForm
 # Create your views here.
@@ -40,5 +40,14 @@ def create_news(request):
 
     context['form']= form
     return render(request, "core/create_news.html", context)
+
+# delete news
+def delete_news(request, pk):
+    news = get_object_or_404(New, pk=pk)
+    if request.method == 'POST':
+        print("llega aqui")
+        news.delete()
+        return redirect('list_news')
+    return render(request, 'core/delete_news.html', context={'news': news})
 
 
