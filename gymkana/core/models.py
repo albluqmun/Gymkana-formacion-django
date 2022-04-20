@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.core.validators import FileExtensionValidator
 # Create your models here.
 
 class BaseItems(models.Model):
@@ -15,7 +15,7 @@ class BaseItems(models.Model):
 
 class New(BaseItems):
     publish_date = models.DateField(auto_now_add=True)
-    image = models.ImageField(upload_to='', default='default.jpg', blank=True)
+    image = models.ImageField(upload_to='', default='default.jpg', blank=True, validators=[FileExtensionValidator(['jpg', 'png'])])
 
     class Meta:
         ordering = ('-publish_date',)
