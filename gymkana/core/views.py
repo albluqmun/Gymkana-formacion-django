@@ -80,7 +80,7 @@ class CreateNews(generic.CreateView):
     fields = ['title', 'subtitle', 'body', 'image']
     template_name = 'core/create_news.html'
 
-    success_url = reverse_lazy('list_news')
+    success_url = reverse_lazy('class_list_news')
 
     # save image uploaded
     def post(self, request):
@@ -114,4 +114,4 @@ class DeleteNews(generic.DeleteView):
     context_object_name = 'form'
 
     def get_success_url(self):
-        return reverse_lazy('list_news')
+        return reverse_lazy('class_list_news')
