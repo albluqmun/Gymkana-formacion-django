@@ -18,5 +18,7 @@ urlpatterns = [
     # Eventos
     path('v2/events', views.ListEvent.as_view(), name='list_events'),
     path('v2/events/<int:pk>', views.DetailEvent.as_view(), name='detail_event'),
-    
+    path('v2/events/create', views.CreateEvent.as_view(), name='create_event'),
+    path('v2/events/<int:pk>/update', views.UpdateEvent.as_view(), name='update_event'),
+
 ]

@@ -128,3 +128,18 @@ class DetailEvent(generic.DetailView):
     context_object_name = 'event'
     template_name = 'core/detail_event.html'
 
+class CreateEvent(generic.CreateView):
+    model = Event
+    fields = ['title', 'subtitle', 'body', 'start_date', 'end_date']
+    template_name = 'core/create_event.html'
+
+    success_url = reverse_lazy('list_events')
+
+class UpdateEvent(generic.UpdateView):
+    model = Event
+    fields = ['title', 'subtitle', 'body', 'start_date', 'end_date']
+    template_name = 'core/update_event.html'
+
+    def get_success_url(self):
+        return reverse_lazy('detail_event', kwargs={'pk': self.object.id})
+
