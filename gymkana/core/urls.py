@@ -15,4 +15,8 @@ urlpatterns = [
     path('v2/news/create', views.CreateNews.as_view(), name='class_create_news'),
     path('v2/news/<int:pk>/update', views.UpdateNews.as_view(), name='class_update_news'),
     path('v2/news/<int:pk>/delete', views.DeleteNews.as_view(), name='class_delete_news'),
+    # Eventos
+    path('v2/events', views.ListEvent.as_view(), name='list_events'),
+    
+
 ]

@@ -1,7 +1,7 @@
 from multiprocessing import context
 from django.shortcuts import get_list_or_404, get_object_or_404, render, redirect
 from .models import New, Event
-from .forms import NewsForm
+from .forms import NewsForm, EventsForm
 from django.views import generic
 from django.urls import reverse_lazy
 
@@ -115,3 +115,13 @@ class DeleteNews(generic.DeleteView):
 
     def get_success_url(self):
         return reverse_lazy('class_list_news')
+
+### Eventos
+
+class ListEvent(generic.ListView):
+    model = Event
+    template_name = 'core/list_events.html'
+    context_object_name = 'events'
+
+
+
