@@ -49,8 +49,7 @@ def create_news(request):
 # update news
 def update_news(request, pk):
     old_news = get_object_or_404(New, pk=pk)
-    form = NewsForm(request.POST or None, instance=old_news)
-    # FIXME: no se puede actualizar la imagen
+    form = NewsForm(request.POST or None, request.FILES or None, instance=old_news)
     if form.is_valid():
         form.save()
         return redirect('/v1/news/' + str(pk))
@@ -100,6 +99,14 @@ class UpdateNews(generic.UpdateView):
 
     def get_success_url(self):
         return reverse_lazy('detail_news', kwargs={'pk': self.object.id})
+
+    def get_post(self, request):
+        old_news = get_object_or_404(New, pk=self.kwargs['pk'])
+        form = NewsForm(request.POST or None, request.FILES or None, instance=old_news)
+        if form.is_valid():
+            form.save()
+            return redirect('/v2/news/' + str(self.kwargs['pk']))
+        return render(request, 'core/update_news.html', context={'news': old_news, 'form': form})
 
 class DeleteNews(generic.DeleteView):
     model = New
