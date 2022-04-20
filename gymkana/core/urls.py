@@ -17,6 +17,6 @@ urlpatterns = [
     path('v2/news/<int:pk>/delete', views.DeleteNews.as_view(), name='class_delete_news'),
     # Eventos
     path('v2/events', views.ListEvent.as_view(), name='list_events'),
+    path('v2/events/<int:pk>', views.DetailEvent.as_view(), name='detail_event'),
     
-
 ]

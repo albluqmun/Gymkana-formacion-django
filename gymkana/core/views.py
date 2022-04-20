@@ -123,5 +123,8 @@ class ListEvent(generic.ListView):
     template_name = 'core/list_events.html'
     context_object_name = 'events'
 
-
+class DetailEvent(generic.DetailView):
+    model = Event
+    context_object_name = 'event'
+    template_name = 'core/detail_event.html'
 
