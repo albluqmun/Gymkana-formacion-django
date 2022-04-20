@@ -2,7 +2,6 @@ from django import forms
 from .models import New, Event
 from django.core.validators import FileExtensionValidator
 
-
 class NewsForm(forms.ModelForm):
 
     def clean_image(self):
@@ -16,19 +15,12 @@ class NewsForm(forms.ModelForm):
             return image
 
     class Meta:
-        
         model = New    
         fields = ['title', 'subtitle', 'body', 'image']
 
 
-        
-
 class EventsForm(forms.ModelForm):
 
     class Meta:
-        
         model = Event    
         fields = ['title', 'subtitle', 'body', 'start_date', 'end_date']
-
-
-

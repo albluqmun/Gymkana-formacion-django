@@ -12,8 +12,6 @@ def index(request):
     news =  get_list_or_404(New)
     # get eventos mas recientes
     events = get_list_or_404(Event)
-
-
     # add news and events to context
     context = {'news': news, 'events': events}
 
@@ -55,7 +53,6 @@ def update_news(request, pk):
         return redirect('/v1/news/' + str(pk))
     return render(request, 'core/update_news.html', context={'news': old_news, 'form': form})
 
-
 # delete news
 def delete_news(request, pk):
     news = get_object_or_404(New, pk=pk)
@@ -89,8 +86,6 @@ class CreateNews(generic.CreateView):
             form.save()
             return redirect('list_news')
         return render(request, 'core/create_news.html', context={'form': form})
-
-
 
 class UpdateNews(generic.UpdateView):
     model = New
