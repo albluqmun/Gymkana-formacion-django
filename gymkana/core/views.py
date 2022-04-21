@@ -8,18 +8,20 @@ from django.urls import reverse_lazy
 # Create your views here.
 
 def index(request):
+    context= {}
     # get news mas recientes
-    news =  get_list_or_404(New)
-    # get eventos mas recientes
-    events = get_list_or_404(Event)
+    news =  New.objects.all()
+    context['news'] = news
+
+    events = Event.objects.all()
     # add news and events to context
-    context = {'news': news, 'events': events}
+    context['events'] = events
 
     return render(request, 'core/index.html', context=context)
 
 def list_news(request):
     # get news
-    news = get_list_or_404(New)
+    news = New.objects.all()
     # add news to context
     context = {'news': news}
     return render(request, 'core/list_news.html', context=context)
@@ -138,3 +140,10 @@ class UpdateEvent(generic.UpdateView):
     def get_success_url(self):
         return reverse_lazy('detail_event', kwargs={'pk': self.object.id})
 
+class DeleteEvent(generic.DeleteView):
+    model = Event
+    template_name = 'core/delete_event.html'
+    context_object_name = 'form'
+
+    def get_success_url(self):
+        return reverse_lazy('list_events')
