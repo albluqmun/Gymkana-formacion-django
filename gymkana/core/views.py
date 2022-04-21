@@ -37,7 +37,7 @@ def detail_news(request, pk):
 # create new news
 def create_news(request):
     context = {'form': NewsForm()}
-    
+
     if request.method == 'POST':
         form = NewsForm(request.POST, request.FILES)
         if form.is_valid():
@@ -77,34 +77,19 @@ class DetailNews(generic.DetailView):
 
 class CreateNews(generic.CreateView):
     model = New
-    fields = ['title', 'subtitle', 'body', 'image']
+    form_class = NewsForm
     template_name = 'core/create_news.html'
 
     success_url = reverse_lazy('class_list_news')
 
-    # save image uploaded
-    def post(self, request):
-        form = NewsForm(request.POST, request.FILES)
-        if form.is_valid():
-            form.save()
-            return redirect('list_news')
-        return render(request, 'core/create_news.html', context={'form': form})
-
 class UpdateNews(generic.UpdateView):
     model = New
-    fields = ['title', 'subtitle', 'body', 'image']
+    form_class = EventsForm
     template_name = 'core/update_news.html'
 
     def get_success_url(self):
         return reverse_lazy('detail_news', kwargs={'pk': self.object.id})
 
-    def get_post(self, request):
-        old_news = get_object_or_404(New, pk=self.kwargs['pk'])
-        form = NewsForm(request.POST or None, request.FILES or None, instance=old_news)
-        if form.is_valid():
-            form.save()
-            return redirect('/v2/news/' + str(self.kwargs['pk']))
-        return render(request, 'core/update_news.html', context={'news': old_news, 'form': form})
 
 class DeleteNews(generic.DeleteView):
     model = New
