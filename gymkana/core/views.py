@@ -67,13 +67,13 @@ def delete_news(request, pk):
 ### class views
 class ListNews(generic.ListView):
     model = New
-    template_name = 'core/list_news.html'
+    template_name = 'core/class_list_news.html'
     context_object_name = 'news'
 
 class DetailNews(generic.DetailView):
     model = New
     context_object_name = 'news'
-    template_name = 'core/detail_news.html'
+    template_name = 'core/class_detail_news.html'
 
 class CreateNews(generic.CreateView):
     model = New
@@ -86,9 +86,10 @@ class UpdateNews(generic.UpdateView):
     model = New
     form_class = EventsForm
     template_name = 'core/update_news.html'
+    
 
     def get_success_url(self):
-        return reverse_lazy('detail_news', kwargs={'pk': self.object.id})
+        return reverse_lazy('class_detail_news', kwargs={'pk': self.object.id})
 
 
 class DeleteNews(generic.DeleteView):

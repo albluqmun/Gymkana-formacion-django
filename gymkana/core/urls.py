@@ -11,6 +11,7 @@ urlpatterns = [
     path('v1/news/<int:pk>/delete', delete_news, name='delete_news'),
     path('v1/news/<int:pk>/update', update_news, name='update_news'),
     re_path(r'v2/news/?$', views.ListNews.as_view(), name='class_list_news'),
+    path('v2/news/<int:pk>/', views.DetailNews.as_view(), name='class_detail_news'),
     path('v2/news/<int:pk>', views.DetailNews.as_view(), name='class_update_news'),
     path('v2/news/create', views.CreateNews.as_view(), name='class_create_news'),
     path('v2/news/<int:pk>/update', views.UpdateNews.as_view(), name='class_update_news'),
