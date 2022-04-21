@@ -36,15 +36,16 @@ def detail_news(request, pk):
 
 # create new news
 def create_news(request):
-    context ={}
-
-    form = NewsForm(request.POST or None, request.FILES)
-    if form.is_valid():
-        form.save()
-        return redirect('list_news')
-
-    context['form']= form
-    return render(request, "core/create_news.html", context)
+    context = {'form': NewsForm()}
+    
+    if request.method == 'POST':
+        form = NewsForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('list_news')
+        else:
+            context['form'] = form
+    return render(request, 'core/create_news.html', context=context)
 
 # update news
 def update_news(request, pk):
