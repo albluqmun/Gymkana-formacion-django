@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="page-section cta">
+    <div class="container">
+      <div class="row">
+        <div class="col-xl-9 mx-auto">
+          <div class="cta-innerv text-center rounded">
+            <h2 class="section-heading mb-5">
+              <span class="section-heading-lower">{{event.title}}</span>
+            </h2>
+            <p class="mb-0 mbt">
+                <span class="section-heading-under">{{event.subtitle}}<em><b></b></em></span>
+              </p>
+              <hr>
+            <p class="mb-0 mbt">
+            {{event.body | linebreaks}}
+            </p>
+            <span class="section-heading-upper">Inicio: {{event.start_date | date:'SHORT_DATE_FORMAT'}}</span><br>
+            <span class="section-heading-upper">Finalización: {{event.end_date| date:'SHORT_DATE_FORMAT'}}</span>
+          </div>
+
+        </div>
+      </div>
+    </div>
+</section>
+{% endblock%}

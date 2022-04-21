@@ -1,27 +1,27 @@
 from multiprocessing import context
 from django.shortcuts import get_list_or_404, get_object_or_404, render, redirect
 from .models import New, Event
-from .forms import NewsForm
+from .forms import NewsForm, EventsForm
 from django.views import generic
 from django.urls import reverse_lazy
 
 # Create your views here.
 
 def index(request):
+    context= {}
     # get news mas recientes
-    news =  get_list_or_404(New)
-    # get eventos mas recientes
-    events = get_list_or_404(Event)
+    news =  New.objects.all()
+    context['news'] = news
 
-
+    events = Event.objects.all()
     # add news and events to context
-    context = {'news': news, 'events': events}
+    context['events'] = events
 
     return render(request, 'core/index.html', context=context)
 
 def list_news(request):
     # get news
-    news = get_list_or_404(New)
+    news = New.objects.all()
     # add news to context
     context = {'news': news}
     return render(request, 'core/list_news.html', context=context)
@@ -36,15 +36,16 @@ def detail_news(request, pk):
 
 # create new news
 def create_news(request):
-    context ={}
+    context = {'form': NewsForm()}
 
-    form = NewsForm(request.POST or None, request.FILES)
-    if form.is_valid():
-        form.save()
-        return redirect('list_news')
-
-    context['form']= form
-    return render(request, "core/create_news.html", context)
+    if request.method == 'POST':
+        form = NewsForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('list_news')
+        else:
+            context['form'] = form
+    return render(request, 'core/create_news.html', context=context)
 
 # update news
 def update_news(request, pk):
@@ -54,7 +55,6 @@ def update_news(request, pk):
         form.save()
         return redirect('/v1/news/' + str(pk))
     return render(request, 'core/update_news.html', context={'news': old_news, 'form': form})
-
 
 # delete news
 def delete_news(request, pk):
@@ -67,46 +67,30 @@ def delete_news(request, pk):
 ### class views
 class ListNews(generic.ListView):
     model = New
-    template_name = 'core/list_news.html'
+    template_name = 'core/class_list_news.html'
     context_object_name = 'news'
 
 class DetailNews(generic.DetailView):
     model = New
     context_object_name = 'news'
-    template_name = 'core/detail_news.html'
+    template_name = 'core/class_detail_news.html'
 
 class CreateNews(generic.CreateView):
     model = New
-    fields = ['title', 'subtitle', 'body', 'image']
+    form_class = NewsForm
     template_name = 'core/create_news.html'
 
     success_url = reverse_lazy('class_list_news')
 
-    # save image uploaded
-    def post(self, request):
-        form = NewsForm(request.POST, request.FILES)
-        if form.is_valid():
-            form.save()
-            return redirect('list_news')
-        return render(request, 'core/create_news.html', context={'form': form})
-
-
-
 class UpdateNews(generic.UpdateView):
     model = New
-    fields = ['title', 'subtitle', 'body', 'image']
+    form_class = EventsForm
     template_name = 'core/update_news.html'
+    
 
     def get_success_url(self):
-        return reverse_lazy('detail_news', kwargs={'pk': self.object.id})
+        return reverse_lazy('class_detail_news', kwargs={'pk': self.object.id})
 
-    def get_post(self, request):
-        old_news = get_object_or_404(New, pk=self.kwargs['pk'])
-        form = NewsForm(request.POST or None, request.FILES or None, instance=old_news)
-        if form.is_valid():
-            form.save()
-            return redirect('/v2/news/' + str(self.kwargs['pk']))
-        return render(request, 'core/update_news.html', context={'news': old_news, 'form': form})
 
 class DeleteNews(generic.DeleteView):
     model = New
@@ -115,3 +99,38 @@ class DeleteNews(generic.DeleteView):
 
     def get_success_url(self):
         return reverse_lazy('class_list_news')
+
+### Eventos
+
+class ListEvent(generic.ListView):
+    model = Event
+    template_name = 'core/list_events.html'
+    context_object_name = 'events'
+
+class DetailEvent(generic.DetailView):
+    model = Event
+    context_object_name = 'event'
+    template_name = 'core/detail_event.html'
+
+class CreateEvent(generic.CreateView):
+    model = Event
+    fields = ['title', 'subtitle', 'body', 'start_date', 'end_date']
+    template_name = 'core/create_event.html'
+
+    success_url = reverse_lazy('list_events')
+
+class UpdateEvent(generic.UpdateView):
+    model = Event
+    fields = ['title', 'subtitle', 'body', 'start_date', 'end_date']
+    template_name = 'core/update_event.html'
+
+    def get_success_url(self):
+        return reverse_lazy('detail_event', kwargs={'pk': self.object.id})
+
+class DeleteEvent(generic.DeleteView):
+    model = Event
+    template_name = 'core/delete_event.html'
+    context_object_name = 'form'
+
+    def get_success_url(self):
+        return reverse_lazy('list_events')

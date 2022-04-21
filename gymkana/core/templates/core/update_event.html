@@ -9,25 +9,21 @@
               <div class="bg-faded rounded p-5">
                 <h2 class="section-heading mb-4">
                   <span class="section-heading-upper">Agrega una noticia</span>
+                  <span class="section-heading-lower">Contacto</span>
                 </h2>
-
                 <!-- Formulario de contacto -->
                 {% if 'ok' in request.GET %}
                   <p><b>Su mensaje se ha enviado correctamente, en breve nos pondremos en contacto</b></p>
                 {% endif %}
-                
                 <form action="" method="POST" enctype="multipart/form-data" >
                   {% csrf_token %}
                   <table>
                     {{ form.as_table}}
                   </table>
-                  
                     <input type="submit" class="btn btn-primary btn-block py-2" value="Enviar">
                     </div>
                 </form>
-                
                 <!-- Fin formulario de contacto -->
-
               </div>
             </div>
           </div>
