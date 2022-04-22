@@ -170,3 +170,16 @@ class NewsUpdate(generics.UpdateAPIView):
 class NewsDelete(generics.DestroyAPIView):
     queryset = New.objects.all()
     serializer_class = NewSerializer
+
+class EventCreate(generics.CreateAPIView):
+    queryset = Event.objects.all()
+    serializer_class = EventSerializer
+
+class EventUpdate(generics.UpdateAPIView):
+    queryset = Event.objects.all()
+    serializer_class = EventSerializer
+
+class EventDelete(generics.DestroyAPIView):
+    queryset = Event.objects.all()
+    serializer_class = EventSerializer
+

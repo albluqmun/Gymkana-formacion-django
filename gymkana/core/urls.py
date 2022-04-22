@@ -30,6 +30,9 @@ urlpatterns = [
     path('api/news/create', views.NewsCreate.as_view(), name='api_news_create'),
     path('api/news/<int:pk>/update', views.NewsUpdate.as_view(), name='api_news_update'),
     path('api/news/<int:pk>/delete', views.NewsDelete.as_view(), name='api_news_delete'),
-    
+    path('api/event/create', views.EventCreate.as_view(), name='api_event_create'),
+    path('api/event/<int:pk>/update', views.EventUpdate.as_view(), name='api_event_update'),
+    path('api/event/<int:pk>/delete', views.EventDelete.as_view(), name='api_event_delete'),
+
 
 ]
