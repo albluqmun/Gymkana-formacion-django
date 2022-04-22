@@ -1,5 +1,5 @@
 from django.contrib import admin
-from django.urls import path, re_path
+from django.urls import path, re_path, include
 from .views import index, detail_news, list_news, create_news, delete_news, update_news
 from . import views
 
@@ -22,5 +22,14 @@ urlpatterns = [
     path('v2/events/create', views.CreateEvent.as_view(), name='create_event'),
     path('v2/events/<int:pk>/update', views.UpdateEvent.as_view(), name='update_event'),
     path('v2/events/<int:pk>/delete', views.DeleteEvent.as_view(), name='delete_event'),
+    # Rest api 
+    path('api/news', views.NewsList.as_view(), name='api_news'),
+    path('api/event', views.EventList.as_view(), name='api_event'),
+    path('api/news/<int:pk>', views.NewsDetail.as_view(), name='api_news_detail'),
+    path('api/event/<int:pk>', views.EventDetail.as_view(), name='api_event_detail'),
+    path('api/news/create', views.NewsCreate.as_view(), name='api_news_create'),
+    path('api/news/<int:pk>/update', views.NewsUpdate.as_view(), name='api_news_update'),
+    path('api/news/<int:pk>/delete', views.NewsDelete.as_view(), name='api_news_delete'),
+    
 
 ]

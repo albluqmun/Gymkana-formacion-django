@@ -5,6 +5,12 @@ from .forms import NewsForm, EventsForm
 from django.views import generic
 from django.urls import reverse_lazy
 
+from rest_framework import viewsets
+from .serializers import NewSerializer, EventSerializer
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from rest_framework import generics
+
 # Create your views here.
 
 def index(request):
@@ -87,7 +93,6 @@ class UpdateNews(generic.UpdateView):
     form_class = NewsForm
     template_name = 'core/update_news.html'
     
-
     def get_success_url(self):
         return reverse_lazy('class_detail_news', kwargs={'pk': self.object.id})
 
@@ -135,3 +140,33 @@ class DeleteEvent(generic.DeleteView):
     def get_success_url(self):
         return reverse_lazy('list_events')
 
+### API rest
+
+class NewsList(generics.ListCreateAPIView):
+    queryset = New.objects.all()
+    serializer_class = NewSerializer
+
+class EventList(generics.ListCreateAPIView):
+    queryset = Event.objects.all()
+    serializer_class = EventSerializer
+
+class NewsDetail(generics.RetrieveAPIView):
+    queryset = New.objects.all()
+    serializer_class = NewSerializer
+
+class EventDetail(generics.RetrieveAPIView):
+    queryset = Event.objects.all()
+    serializer_class = EventSerializer
+
+# TODO: implementar restrinciones imagen.
+class NewsCreate(generics.CreateAPIView):
+    queryset = New.objects.all()
+    serializer_class = NewSerializer
+
+class NewsUpdate(generics.UpdateAPIView):
+    queryset = New.objects.all()
+    serializer_class = NewSerializer
+
+class NewsDelete(generics.DestroyAPIView):
+    queryset = New.objects.all()
+    serializer_class = NewSerializer
