@@ -162,7 +162,6 @@ class EventUpdate(generics.UpdateAPIView):
     def patch(self, request, *args, **kwargs):
         return self.update(request, *args, **kwargs)
 
-
 class EventDelete(generics.DestroyAPIView):
     queryset = Event.objects.all()
     serializer_class = EventSerializer

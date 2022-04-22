@@ -1,10 +1,16 @@
+import json
 from django.test import TestCase, RequestFactory
 from .models import New, Event
 from django.conf.urls.static import static
 from django.conf import settings
 from django.test import Client
 from django.urls import reverse, reverse_lazy
-# Create your tests here.
+
+# api rest framework
+from rest_framework.test import APIClient
+from rest_framework import status
+from rest_framework.test import RequestsClient
+from rest_framework.test import APIRequestFactory
 
 class TestUrls(TestCase):
     
@@ -56,8 +62,6 @@ class TestView(TestCase):
 
     def test_create_news(self):
         before = New.objects.count()
-
-        # user visit the page news/create
         
         url = reverse('create_news')
         resp = self.client.get(url)
@@ -286,4 +290,60 @@ class test_event(TestCase):
         resp = self.client.get(reverse_lazy('list_events'))
         self.assertEqual(resp.status_code, 200)
         self.assertTemplateUsed(resp, 'core/list_events.html')
+
+class Test_api_rest(TestCase):
+
+    def setUp(self):
+        data_event = {'title': 'title', 'subtitle': 'subtitle', 'body': 'body', 'start_date': '2019-01-01', 'end_date': '2019-01-02'}
+        self.event = Event.objects.create(**data_event)
+
+    def test_api_list_event(self):
+        url = reverse('api_event')
+        resp = self.client.get(url)
+        self.assertEqual(resp.status_code, 200)
+        self.assertContains(resp, 'title')
+        self.assertContains(resp, 'subtitle')
+
+    def test_api_detail_event(self):
+        url = reverse('api_event_detail', kwargs={'pk': self.event.id})
+        resp = self.client.get(url)
+        self.assertEqual(resp.status_code, 200)
+        self.assertContains(resp, 'title')
+        self.assertContains(resp, 'subtitle')
+        self.assertContains(resp, 'body')
+        self.assertContains(resp, '2019-01-01')
+        self.assertContains(resp, '2019-01-02')
+
+    def test_api_create_event(self):
+        before = Event.objects.count()
+        url = reverse('api_event_create')
+        data = {'title': 'title2', 'subtitle': 'subtitle', 'body': 'body', 'start_date': '2019-01-01', 'end_date': '2019-01-02'}
+        resp = self.client.post(url, data)
+        self.assertEqual(resp.status_code, 201)
+        self.assertEqual(Event.objects.count(), before + 1)
+
+        
+    def test_api_update_event(self):
+        url = reverse('api_event_update', kwargs={'pk': self.event.id})
+        data = {'title': 'title2', 'subtitle': 'subtitle', 'body': 'body', 'start_date': '2019-01-01', 'end_date': '2019-01-02'}
+        resp = self.client.put(url, data, content_type='application/json')
+        self.assertEqual(resp.status_code, 200)
+        self.assertContains(resp, 'title2')
+        self.assertContains(resp, 'subtitle')
+        self.assertContains(resp, 'body')
+        self.assertContains(resp, '2019-01-01')
+        self.assertContains(resp, '2019-01-02')
+
+    def test_api_delete_event(self):
+        url = reverse('api_event_delete', kwargs={'pk': self.event.id})
+        before = Event.objects.count()
+        resp = self.client.delete(url)
+        self.assertEqual(resp.status_code, 204)
+        self.assertEqual(Event.objects.count(), before - 1)
+
+
+
+        
+
+        
 
