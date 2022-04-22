@@ -6,7 +6,7 @@ from django.views import generic
 from django.urls import reverse_lazy
 
 from rest_framework import viewsets
-from .serializers import NewSerializer, EventSerializer
+from .serializers import EventSerializer
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import generics
