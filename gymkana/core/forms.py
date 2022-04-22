@@ -1,6 +1,7 @@
 from django import forms
 from .models import New, Event
 from django.core.validators import FileExtensionValidator
+from .widgets import DatePickerInput, TimePickerInput, DateTimePickerInput
 
 class NewsForm(forms.ModelForm):
 
@@ -24,6 +25,10 @@ class EventsForm(forms.ModelForm):
     class Meta:
         model = Event    
         fields = ['title', 'subtitle', 'body', 'start_date', 'end_date']
+        widgets = {
+            'start_date': DatePickerInput(),
+            'end_date': DatePickerInput(),
+        }
     
     def clean(self):
         start_date = self.cleaned_data['start_date']

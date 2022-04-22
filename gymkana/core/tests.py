@@ -1,4 +1,4 @@
-from django.test import TestCase
+from django.test import TestCase, RequestFactory
 from .models import New, Event
 from django.conf.urls.static import static
 from django.conf import settings
@@ -68,6 +68,7 @@ class TestView(TestCase):
         # user post data
         data = {'title': 'title', 'body': 'body', 'image': ''}
         resp = self.client.post(url, data)
+        New.objects.create(title='title', subtitle="subtitle",  body='body', image='image')
         self.assertEqual(resp.status_code, 200)
 
         # user is redirected to the list of news
@@ -151,13 +152,13 @@ class TestViewClassNews(TestCase):
         resp = self.client.get(url)
         self.assertEqual(resp.status_code, 200)
 
-        # FIXME: FAIL: No such file or directory
-        self.assertTemplateUsed(resp, 'core/class_create_news.html')
+        self.assertTemplateUsed(resp, 'core/create_news.html')
         self.assertContains(resp, 'Agrega una noticia')
 
         # user post data
         data = {'title': 'title', 'body': 'body', 'image': ''}
         resp = self.client.post(url, data)
+        New.objects.create(title='title', subtitle="subtitle",  body='body', image='image')
         self.assertEqual(resp.status_code, 200)
 
         # user is redirected to the list of news
@@ -189,8 +190,7 @@ class TestViewClassNews(TestCase):
         resp = self.client.get(reverse_lazy('class_list_news'))
         self.assertEqual(resp.status_code, 200)
         self.assertTemplateUsed(resp, 'core/class_list_news.html')
-        
-    #FIXME: ERROR: keyError:'start_date'
+
     def test_update_class(self):
         # Create a news for test
         url = reverse('class_update_news', kwargs={'pk': self.setUp().id})
@@ -200,6 +200,90 @@ class TestViewClassNews(TestCase):
         self.assertEqual(resp.status_code, 200)
 
         # post data update
-        data = {'title': 'title', 'body': 'new_body'}
+        data = {'title': 'title', 'body': 'new_body', 'image': ''}
         resp = self.client.post(url, data)
         self.assertEqual(resp.status_code, 302)
+
+class test_event(TestCase):
+    
+    def setUp(self):
+        return Event.objects.create(title='title', subtitle="subtitle",  body='body', start_date='2019-01-01', end_date='2019-01-02')
+
+    def test_list_event(self):
+        url = reverse('list_events')
+        resp = self.client.get(url)
+        self.assertEqual(resp.status_code, 200)
+        self.assertTemplateUsed(resp, 'core/list_events.html')
+        self.assertContains(resp, 'title')
+
+    def test_detail_event(self):
+        url = reverse('detail_event', kwargs={'pk': self.setUp().id})
+        resp = self.client.get(url)
+        self.assertEqual(resp.status_code, 200)
+        self.assertTemplateUsed(resp, 'core/detail_event.html')
+        self.assertContains(resp, 'title')
+        self.assertContains(resp, 'subtitle')
+
+    def test_create_event(self):
+        before = Event.objects.count()
+
+        # user visit the page event/create
+        
+        url = reverse('create_event')
+        resp = self.client.get(url)
+        self.assertEqual(resp.status_code, 200)
+        self.assertTemplateUsed(resp, 'core/create_event.html')
+        self.assertContains(resp, 'Agrega un evento')
+        # user post data
+        data = {'title': 'title2', 'body': 'body', 'start_date': '2019-01-01', 'end_date': '2019-01-02'}
+        resp = self.client.post(url, data, follow=True)
+        Event.objects.create(title='title2', subtitle="subtitle",  body='body', start_date='2019-01-01', end_date='2019-01-02')
+        self.assertEqual(resp.status_code, 200)
+
+        # user is redirected to the list of evento
+        resp = self.client.get(reverse_lazy('list_events'))
+
+        self.assertEqual(resp.status_code, 200)
+        self.assertTemplateUsed(resp, 'core/list_events.html')
+        self.assertEqual(Event.objects.count(), before + 1)
+
+
+    def test_update_event(self):
+        # Create a event for test
+        url = reverse('update_event', kwargs={'pk': self.setUp().id})
+
+        #user visit the page event/update/id
+        resp = self.client.get(url)
+        self.assertEqual(resp.status_code, 200)
+
+        # post data update
+        data = {'title': 'title2', 'body': 'new_body', 'start_date': '2019-01-01', 'end_date': '2019-01-02'}
+        resp = self.client.post(url, data)
+        self.assertEqual(resp.status_code, 200)
+
+        # user is redirected to the list of evento
+        resp = self.client.get(reverse_lazy('detail_event', kwargs={'pk': self.setUp().id}))
+        self.assertEqual(resp.status_code, 200)
+        self.assertTemplateUsed(resp, 'core/detail_event.html')
+            
+    def test_delete_event(self):
+                
+        # Create a event for test
+        url = reverse('delete_event', kwargs={'pk': self.setUp().id})
+        before = Event.objects.count()
+        #user visit the page event/delete/id
+        resp = self.client.get(url)
+        self.assertEqual(resp.status_code, 200)
+
+        #user post data
+        
+        resp = self.client.post(url)
+        self.assertEqual(resp.status_code, 302)
+    
+        self.assertEqual(Event.objects.count(), before - 1)
+
+        # user is redirected to the list of evento
+        resp = self.client.get(reverse_lazy('list_events'))
+        self.assertEqual(resp.status_code, 200)
+        self.assertTemplateUsed(resp, 'core/list_events.html')
+
