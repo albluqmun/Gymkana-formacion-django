@@ -31,9 +31,27 @@
           
         </div>
         <div class="col col-lg-2">
-          <a href="" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Delete</a>
+          <a
+            class="btn btn-primary btn-lg active" 
+            role="button" 
+            aria-pressed="true"
+            href="{% url 'delete_event' event.id%}"
+            class="dropdown-item text-danger"
+            data-toggle="modal"
+            data-target="#delete-item-modal"
+            id="delete-item"
+          >
+            Delete
+          </a>
         </div>
       </div>
   </div>
+
+{% include 'core/delete_event.html' %}
+
+  
+
 </section>
 {% endblock%}
+
+  

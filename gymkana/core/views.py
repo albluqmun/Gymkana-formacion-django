@@ -131,7 +131,6 @@ class UpdateEvent(generic.UpdateView):
 class DeleteEvent(generic.DeleteView):
     model = Event
     template_name = 'core/delete_event.html'
-    context_object_name = 'form'
 
     def get_success_url(self):
         return reverse_lazy('list_events')

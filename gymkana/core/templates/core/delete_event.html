@@ -1,0 +1,23 @@
+<div class="modal fade" id="delete-item-modal">
+  <div class="modal-dialog">
+      <div class="modal-content">
+          <div class="modal-body">
+              <p>¿Estas seguro que quieres borrar el evento?</p>
+          </div>
+          <div class="justify-content-between mb-2 mr-2 text-right">
+              <form action="{% url 'delete_event' object.id %}" method="post"
+                    id="item-delete-form">
+                  <button type="button" class="btn btn-secondary mr-1" data-dismiss="modal">Cancel</button>
+                  {% csrf_token %}
+                  <input  type="submit" value="Delete" class="btn btn-secondary mr-1" data-dismiss="modal">
+              </form>
+          </div>
+      </div>
+  </div>
+</div>
+
+<script>
+  $(document).on('click', '#delete-item', () => {
+    document.getElementById("item-delete-form").action = document.querySelector('#delete-item').href
+});
+</script>
