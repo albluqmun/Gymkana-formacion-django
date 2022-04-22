@@ -84,7 +84,7 @@ class CreateNews(generic.CreateView):
 
 class UpdateNews(generic.UpdateView):
     model = New
-    form_class = EventsForm
+    form_class = NewsForm
     template_name = 'core/update_news.html'
     
 
@@ -112,16 +112,17 @@ class DetailEvent(generic.DetailView):
     context_object_name = 'event'
     template_name = 'core/detail_event.html'
 
+#FIXME: la validación sale dos veces.
 class CreateEvent(generic.CreateView):
     model = Event
-    fields = ['title', 'subtitle', 'body', 'start_date', 'end_date']
+    form_class = EventsForm
     template_name = 'core/create_event.html'
 
     success_url = reverse_lazy('list_events')
 
 class UpdateEvent(generic.UpdateView):
     model = Event
-    fields = ['title', 'subtitle', 'body', 'start_date', 'end_date']
+    form_class = EventsForm
     template_name = 'core/update_event.html'
 
     def get_success_url(self):
@@ -134,3 +135,4 @@ class DeleteEvent(generic.DeleteView):
 
     def get_success_url(self):
         return reverse_lazy('list_events')
+
