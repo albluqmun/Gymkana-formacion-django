@@ -142,34 +142,13 @@ class DeleteEvent(generic.DeleteView):
 
 ### API rest
 
-class NewsList(generics.ListCreateAPIView):
-    queryset = New.objects.all()
-    serializer_class = NewSerializer
-
 class EventList(generics.ListCreateAPIView):
     queryset = Event.objects.all()
     serializer_class = EventSerializer
 
-class NewsDetail(generics.RetrieveAPIView):
-    queryset = New.objects.all()
-    serializer_class = NewSerializer
-
 class EventDetail(generics.RetrieveAPIView):
     queryset = Event.objects.all()
     serializer_class = EventSerializer
-
-# TODO: implementar restrinciones imagen.
-class NewsCreate(generics.CreateAPIView):
-    queryset = New.objects.all()
-    serializer_class = NewSerializer
-
-class NewsUpdate(generics.UpdateAPIView):
-    queryset = New.objects.all()
-    serializer_class = NewSerializer
-
-class NewsDelete(generics.DestroyAPIView):
-    queryset = New.objects.all()
-    serializer_class = NewSerializer
 
 class EventCreate(generics.CreateAPIView):
     queryset = Event.objects.all()
