@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block content%}
+<div class="main-news">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h2><i class="fas fa-align-justify"></i>Todos los eventos</h2>
+                        <div class="row">
+                            {% for event in events%}
+                            <div class="col-lg-6">
+                                <div class="mn-content">
+                                    <a class="mn-title" href="{% url 'detail_event' event.id %}">{{event.title}}</a>
+                                    <a class="mn-date" href="">{{event.start_date}}</a>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{%endblock%}

@@ -1,0 +1,11 @@
+{% extends 'base.html'%}
+{% block content %}
+<h1>Alerta de borrado</h1>
+
+<p>¿Estas seguro que quieres borrar la noticia?: {{ news.title}}</p>
+
+<form action="" method="post">
+{% csrf_token %}
+<input type="submit" value="Delete">
+</form>
+{% endblock%}

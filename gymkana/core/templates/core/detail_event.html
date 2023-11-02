@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="page-section cta">
+    <div class="container">
+      <div class="row">
+        <div class="col-xl-9 mx-auto">
+          <div class="cta-innerv text-center rounded">
+            <h2 class="section-heading mb-5">
+              <span class="section-heading-lower">{{event.title}}</span>
+            </h2>
+            <p class="mb-0 mbt">
+                <span class="section-heading-under">{{event.subtitle}}<em><b></b></em></span>
+              </p>
+              <hr>
+            <p class="mb-0 mbt">
+            {{event.body | linebreaks}}
+            </p>
+            <span class="section-heading-upper">Inicio: {{event.start_date | date:'SHORT_DATE_FORMAT'}}</span><br>
+            <span class="section-heading-upper">Finalización: {{event.end_date| date:'SHORT_DATE_FORMAT'}}</span>
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <div class="container">
+      <div class="row justify-content-md-center">
+        <div class="col col-lg-2">
+          <a href="{% url 'update_event' event.id%}" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Update</a>
+        </div>
+        <div class="col-md-auto">
+          
+        </div>
+        <div class="col col-lg-2">
+          <a
+            class="btn btn-primary btn-lg active" 
+            role="button" 
+            aria-pressed="true"
+            href="{% url 'delete_event' event.id%}"
+            class="dropdown-item text-danger"
+            data-toggle="modal"
+            data-target="#delete-item-modal"
+            id="delete-item"
+          >
+            Delete
+          </a>
+        </div>
+      </div>
+  </div>
+
+{% include 'core/delete_event.html' %}
+
+  
+
+</section>
+{% endblock%}
+
+  
